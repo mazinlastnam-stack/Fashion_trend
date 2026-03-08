@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* الأنماط كما هي دون تغيير - نفس الأنماط السابقة */
         :root {
             --primary: #ff0000;
             --primary-dark: #cc0000;
@@ -203,11 +204,11 @@
             <div class="card">
                 <h3><i class="fas fa-plus-circle"></i> إضافة قسم جديد</h3>
                 <div class="form-group">
-                    <label>اسم القسم</label>
-                    <input type="text" id="newCategoryName" class="form-control" placeholder="مثال: أنمي">
+                    <label>اسم القسم (بالإنجليزية، مثل: anime, movies, accessories ...)</label>
+                    <input type="text" id="newCategoryName" class="form-control" placeholder="مثال: anime">
                 </div>
                 <div class="form-group">
-                    <label>الوصف</label>
+                    <label>الوصف (بالعربية)</label>
                     <input type="text" id="newCategoryDesc" class="form-control" placeholder="وصف مختصر">
                 </div>
                 <div class="form-group">
@@ -222,7 +223,7 @@
                     <input type="text" id="searchCategory" placeholder="بحث في الأقسام...">
                 </div>
                 <table>
-                    <thead><tr><th>#</th><th>الأيقونة</th><th>الاسم</th><th>الوصف</th><th>الإجراءات</th></tr></thead>
+                    <thead><tr><th>#</th><th>الأيقونة</th><th>الاسم (بالإنجليزية)</th><th>الوصف</th><th>الإجراءات</th></tr></thead>
                     <tbody id="categoriesTable"></tbody>
                 </table>
             </div>
@@ -245,7 +246,7 @@
                     <input type="number" id="newProductOldPrice" class="form-control" step="0.01" min="0" value="0">
                 </div>
                 <div class="form-group">
-                    <label>القسم</label>
+                    <label>القسم (اختر من الأقسام الموجودة)</label>
                     <select id="newProductCategory" class="form-control"></select>
                 </div>
                 <div class="form-group">
@@ -314,7 +315,7 @@
             <span class="close" onclick="closeModal('editCategoryModal')">&times;</span>
             <h3>تعديل القسم</h3>
             <input type="hidden" id="editCategoryId">
-            <div class="form-group"><label>الاسم</label><input type="text" id="editCategoryName" class="form-control"></div>
+            <div class="form-group"><label>الاسم (بالإنجليزية)</label><input type="text" id="editCategoryName" class="form-control"></div>
             <div class="form-group"><label>الوصف</label><input type="text" id="editCategoryDesc" class="form-control"></div>
             <div class="form-group"><label>الأيقونة</label><input type="text" id="editCategoryIcon" class="form-control"></div>
             <button class="btn" onclick="saveCategoryEdit()">حفظ</button>
@@ -342,15 +343,15 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== البيانات الأولية ====================
+        // ==================== البيانات الأولية (معدلة لتتوافق مع المتجر) ====================
         let categories = JSON.parse(localStorage.getItem('mediazone_categories')) || [
-            { id: 1, name: 'أنمي', desc: 'أحدث المسلسلات العربية والأجنبية والأنمي الحصري', icon: 'fas fa-tv' },
-            { id: 2, name: 'أفلام', desc: 'أفلام أجنبية وعربية بجودة عالية', icon: 'fas fa-film' },
-            { id: 3, name: 'إكسسوارات', desc: 'سماعات، شواحن، كيابل، وملحقات الألعاب', icon: 'fas fa-headphones' },
-            { id: 4, name: 'اشتراكات', desc: 'اشتراكات نتفلكس، شاهد، كورسات تعليمية', icon: 'fas fa-gem' },
-            { id: 5, name: 'برامج', desc: 'برامج كمبيوتر، تطبيقات مهكرة، وأدوات احترافية', icon: 'fas fa-laptop-code' },
-            { id: 6, name: 'ألعاب', desc: 'ألعاب PS4, PS5، وشحن رصيد', icon: 'fas fa-gamepad' },
-            { id: 7, name: 'تصميم', desc: 'خدمات برمجية، تصميم مواقع، وأنظمة إدارة', icon: 'fas fa-paint-brush' }
+            { id: 1, name: 'anime', desc: 'أحدث المسلسلات العربية والأجنبية والأنمي الحصري', icon: 'fas fa-tv' },
+            { id: 2, name: 'movies', desc: 'أفلام أجنبية وعربية بجودة عالية', icon: 'fas fa-film' },
+            { id: 3, name: 'accessories', desc: 'سماعات، شواحن، كيابل، وملحقات الألعاب', icon: 'fas fa-headphones' },
+            { id: 4, name: 'subscriptions', desc: 'اشتراكات نتفلكس، شاهد، كورسات تعليمية', icon: 'fas fa-gem' },
+            { id: 5, name: 'software', desc: 'برامج كمبيوتر، تطبيقات مهكرة، وأدوات احترافية', icon: 'fas fa-laptop-code' },
+            { id: 6, name: 'games', desc: 'ألعاب PS4, PS5، وشحن رصيد', icon: 'fas fa-gamepad' },
+            { id: 7, name: 'design', desc: 'خدمات برمجية، تصميم مواقع، وأنظمة إدارة', icon: 'fas fa-paint-brush' }
         ];
         let products = JSON.parse(localStorage.getItem('mediazone_products')) || [
             { id: 1, name: 'سماعة جوهرة AM5', price: 45, oldPrice: 60, category: 'accessories', desc: 'منتج من قسم accessories بجودة عالية.', icon: 'fas fa-headphones', badge: 'وصل حديثاً' },
@@ -371,7 +372,6 @@
 
         // تهيئة
         function init() {
-            // تحديث الإحصائيات
             updateStats();
             renderCategories();
             renderProducts();
@@ -444,7 +444,7 @@
             if (!confirm('هل أنت متأكد من حذف هذا القسم؟')) return;
             categories = categories.filter(c => c.id !== id);
             // حذف المنتجات المرتبطة بهذا القسم (اختياري)
-            products = products.filter(p => p.category !== categories.find(c => c.id === id)?.name?.toLowerCase());
+            products = products.filter(p => p.category !== categories.find(c => c.id === id)?.name);
             saveCategories();
             saveProducts();
             renderCategories();
@@ -483,7 +483,7 @@
             const tbody = document.getElementById('productsTable');
             let html = '';
             products.filter(p => p.name.includes(filter)).forEach((p, index) => {
-                const catName = categories.find(c => c.name.toLowerCase() === p.category)?.name || p.category;
+                const catName = categories.find(c => c.name === p.category)?.name || p.category;
                 html += `<tr>
                     <td>${index+1}</td>
                     <td>${p.name}</td>
@@ -547,9 +547,9 @@
             catSelect.innerHTML = '';
             categories.forEach(c => {
                 const option = document.createElement('option');
-                option.value = c.name.toLowerCase();
+                option.value = c.name;
                 option.textContent = c.name;
-                if (c.name.toLowerCase() === p.category) option.selected = true;
+                if (c.name === p.category) option.selected = true;
                 catSelect.appendChild(option);
             });
             openModal('editProductModal');
@@ -578,7 +578,7 @@
             select.innerHTML = '';
             categories.forEach(c => {
                 const option = document.createElement('option');
-                option.value = c.name.toLowerCase();
+                option.value = c.name;
                 option.textContent = c.name;
                 select.appendChild(option);
             });
