@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts: خط حديث للعربية -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * {
             margin: 0;
@@ -89,11 +87,6 @@
 
         .nav-icons i:hover {
             color: white;
-        }
-
-        /* زر البحث والسلة (غير وظيفي بالكامل في هذا النموذج) */
-        .cart-badge {
-            position: relative;
         }
 
         /* القسم الرئيسي Hero */
@@ -283,7 +276,6 @@
             }
         }
 
-        /* تخصيص الشماعة والنجمة في الشعار (رمز بصري) */
         .logo-icon {
             display: inline-flex;
             align-items: center;
@@ -294,16 +286,76 @@
             font-size: 1.3rem;
             color: var(--gold);
         }
+
+        /* مودال الطلب */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--gold);
+            color: white;
+        }
+        .modal-content h3 {
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 8px;
+            color: white;
+        }
+        .modal-content .btn-gold {
+            margin-top: 1rem;
+        }
+        .close-modal {
+            float: left;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--gold);
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 3000;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر الأسود مع الشعار والرموز -->
     <div class="navbar">
         <div class="logo-area">
             <div class="logo-icon">
-   <!-- رمز الشماعة البديل -->
-                <i class="fas fa-crown"></i>
+                <i class="fas fa-hanger"></i>
             </div>
             <div class="logo">لَمْسَة شَبَابِيَّة</div>
             <div class="tagline">أناقتك... تميزك</div>
@@ -311,98 +363,165 @@
         <div class="nav-icons">
             <i class="fas fa-search"></i>
             <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-bag"></i>
+            <i class="fas fa-shopping-bag" id="cartIcon"></i>
         </div>
     </div>
 
-    <!-- القسم الترحيبي Hero -->
     <div class="hero">
         <h1>أطلَق <span>أناقتَك</span> <br> مع لمسة شبابية</h1>
         <p>أزياء راقية تعكس تميزك، تشكيلة حصرية لكل الأذواق</p>
-
     </div>
 
     <div class="container">
         <h2 class="section-title">أحدث الإطلالات</h2>
-        <div class="products-grid" id="productsGrid">
-            <!-- المنتجات ستضاف عبر JS أو يدوياً، لكن سنضعها بشكل ثابت لتوضيح الهوية -->
-        </div>
+        <div class="products-grid" id="productsGrid"></div>
     </div>
 
     <footer>
         <div class="footer-logo">لَمْسَة شَبَابِيَّة</div>
-        <p style="margin-top: 10px;">© 2025 جميع الحقوق محفوظة | أناقتك سر تميزك</p>
-        <div style="margin-top: 8px;">
+        <p>© 2025 جميع الحقوق محفوظة | أناقتك سر تميزك</p>
+        <div>
             <i class="fab fa-instagram" style="color: var(--gold); margin: 0 6px;"></i>
             <i class="fab fa-twitter" style="color: var(--gold); margin: 0 6px;"></i>
             <i class="fab fa-snapchat" style="color: var(--gold); margin: 0 6px;"></i>
         </div>
     </footer>
 
+    <!-- مودال إدخال بيانات العميل -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>إتمام الطلب</h3>
+            <input type="text" id="customerName" placeholder="الاسم الكامل" required>
+            <input type="tel" id="customerPhone" placeholder="رقم الهاتف" required>
+            <textarea id="customerAddress" rows="3" placeholder="العنوان بالتفصيل"></textarea>
+            <button class="btn-gold" id="confirmOrderBtn">تأكيد الطلب</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
     <script>
-        // بيانات المنتجات (تعكس الطابع الذهبي والأناقة)
-        const products = [
-            {
-                id: 1,
-                name: "بليزر كلاسيك ذهبي",
-                price: "٣٤٠ ر.س",
-                img: "https://placehold.co/600x800/1e1e1e/D4AF37?text=Blazer",
-                badge: "إصدار محدود"
-            },
-            {
-                id: 2,
-                name: "قميص كاجوال أسود",
-                price: "١٨٠ ر.س",
-                img: "https://placehold.co/600x800/111111/D4AF37?text=Shirt",
-                badge: "الأكثر مبيعاً"
-            },
-            {
-                id: 3,
-                name: "ساعة أنيقة ذهبية",
-                price: "٥٥٠ ر.س",
-                img: "https://placehold.co/600x800/222222/D4AF37?text=Watch",
-                badge: "تميز"
-            },
-            {
-                id: 4,
-                name: "حذاء جلد فاخر",
-                price: "٤٢٠ ر.س",
-                img: "https://placehold.co/600x800/1a1a1a/D4AF37?text=Shoes",
-                badge: "جودة عالية"
-            }
+        // === ربط localStorage مع admin ===
+        let products = JSON.parse(localStorage.getItem('lamsa_products')) || [
+            { id: 1, name: 'بليزر كلاسيك ذهبي', price: 340, oldPrice: 0, category: 'men', desc: 'بليزر بقصة عصرية', icon: 'fas fa-tshirt', badge: 'إصدار محدود', image: 'https://placehold.co/600x800/111111/D4AF37?text=Blazer' },
+            { id: 2, name: 'قميص كاجوال أسود', price: 180, oldPrice: 250, category: 'men', desc: 'قميص قطني مريح', icon: 'fas fa-tshirt', badge: 'الأكثر مبيعاً', image: 'https://placehold.co/600x800/111111/D4AF37?text=Shirt' },
+            { id: 3, name: 'ساعة أنيقة ذهبية', price: 550, oldPrice: 0, category: 'watches', desc: 'ساعة كرونوغراف', icon: 'fas fa-clock', badge: 'تميز', image: 'https://placehold.co/600x800/111111/D4AF37?text=Watch' },
+            { id: 4, name: 'حذاء جلد فاخر', price: 420, oldPrice: 600, category: 'shoes', desc: 'حذاء رسمي', icon: 'fas fa-shoe-prints', badge: 'جودة عالية', image: 'https://placehold.co/600x800/111111/D4AF37?text=Shoes' },
+            { id: 5, name: 'حقيبة يد أنيقة', price: 290, oldPrice: 0, category: 'women', desc: 'حقيبة جلدية', icon: 'fas fa-bag-shopping', badge: '', image: 'https://placehold.co/600x800/111111/D4AF37?text=Bag' }
         ];
+        let orders = JSON.parse(localStorage.getItem('lamsa_orders')) || [];
 
-        const productsGrid = document.getElementById('productsGrid');
+        // حفظ المنتجات إذا لم تكن موجودة (لضمان التوافق)
+        if (!localStorage.getItem('lamsa_products')) {
+            localStorage.setItem('lamsa_products', JSON.stringify(products));
+        }
 
+        let selectedProduct = null;
+
+        // عرض المنتجات
         function renderProducts() {
-            productsGrid.innerHTML = '';
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
             products.forEach(product => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <img class="product-img" src="${product.img}" alt="${product.name}">
+                    <img class="product-img" src="${product.image || 'https://placehold.co/600x800/111111/D4AF37?text=No+Img'}" alt="${product.name}">
                     <div class="product-info">
-                        <div class="badge-star"><i class="fas fa-star"></i> ${product.badge}</div>
+                        ${product.badge ? `<div class="badge-star"><i class="fas fa-star"></i> ${product.badge}</div>` : ''}
                         <div class="product-title">${product.name}</div>
-                        <div class="product-price">${product.price}</div>
+                        <div class="product-price">${product.price} ر.س ${product.oldPrice ? `<del>${product.oldPrice} ر.س</del>` : ''}</div>
                         <button class="btn-gold" data-id="${product.id}" data-name="${product.name}">
                             <i class="fas fa-shopping-cart"></i> أضف إلى السلة
                         </button>
                     </div>
                 `;
-                productsGrid.appendChild(card);
+                grid.appendChild(card);
             });
 
             // إضافة حدث لكل زر
             document.querySelectorAll('.btn-gold').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    const productName = btn.getAttribute('data-name');
-                    alert(`✨ تم إضافة "${productName}" إلى سلة التسوق بنجاح.`);
+                    const productId = parseInt(btn.getAttribute('data-id'));
+                    selectedProduct = products.find(p => p.id === productId);
+                    if (selectedProduct) {
+                        openModal();
+                    } else {
+                        showToast('حدث خطأ، حاول مرة أخرى', 'error');
+                    }
                 });
             });
         }
 
+        // مودال الطلب
+        function openModal() {
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+            selectedProduct = null;
+        }
+
+        // حفظ الطلب
+        function submitOrder() {
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const address = document.getElementById('customerAddress').value.trim();
+            if (!name || !phone) {
+                showToast('الرجاء إدخال الاسم ورقم الهاتف', 'error');
+                return;
+            }
+            if (!selectedProduct) return;
+
+            const newOrder = {
+                name: name,
+                phone: phone,
+                address: address,
+                total: selectedProduct.price,
+                productName: selectedProduct.name,
+                productId: selectedProduct.id,
+                date: new Date().toISOString()
+            };
+            orders.push(newOrder);
+            localStorage.setItem('lamsa_orders', JSON.stringify(orders));
+            showToast(`تم إضافة طلبك بنجاح: ${selectedProduct.name}`, 'success');
+            closeModal();
+
+            // (اختياري) يمكن إرسال إشعار تليجرام هنا إذا رغبت
+        }
+
+        // رسالة توست
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.background = type === 'success' ? 'var(--gold)' : '#f44336';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // حدث تأكيد الطلب
+        document.getElementById('confirmOrderBtn').addEventListener('click', submitOrder);
+
+        // إغلاق المودال بالضغط خارج المحتوى
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        // أيقونة السلة (يمكن توجيهها لصفحة السلة لاحقاً)
+        document.getElementById('cartIcon').addEventListener('click', () => {
+            showToast('سيتم تفعيل سلة التسوق قريباً', 'info');
+        });
+
+        // تهيئة الصفحة
         renderProducts();
     </script>
 </body>
