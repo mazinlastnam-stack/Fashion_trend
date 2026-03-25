@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="نظام إدارة متجر تريند للأناقة - لوحة تحكم متكاملة">
-    <title>تريند للأناقة | نظام إدارة متجر متقدم</title>
+    <title>تريند للأناقة | لوحة تحكم المسؤول</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -43,7 +43,6 @@
             overflow-x: hidden;
         }
 
-        /* Side Navigation */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, var(--sidebar) 0%, #0a0a0a 100%);
@@ -54,10 +53,9 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             z-index: 100;
             overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
 
         .sidebar::-webkit-scrollbar {
@@ -103,30 +101,12 @@
             gap: 12px;
             transition: all 0.3s;
             font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 0;
-            height: 100%;
-            background: rgba(255,140,0,0.1);
-            transition: width 0.3s;
-        }
-
-        .sidebar a:hover::before {
-            width: 100%;
         }
 
         .sidebar a:hover, .sidebar a.active {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             transform: translateX(-5px);
-            box-shadow: 0 4px 12px rgba(255,140,0,0.3);
         }
 
         .sidebar a i {
@@ -140,7 +120,6 @@
             padding-top: 20px;
         }
 
-        /* Main Content */
         .main-content {
             margin-right: 280px;
             padding: 30px;
@@ -148,7 +127,6 @@
             transition: all 0.3s;
         }
 
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -176,12 +154,6 @@
             color: var(--primary);
         }
 
-        .date-time {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -228,24 +200,12 @@
             font-weight: 900;
         }
 
-        .stat-card p {
-            color: var(--text-light);
-            margin: 0;
-            font-weight: 600;
-        }
-
-        /* Section Cards */
         .section-card {
             background: var(--white);
             padding: 25px;
             border-radius: 20px;
             box-shadow: var(--shadow);
             margin-bottom: 30px;
-            transition: all 0.3s;
-        }
-
-        .section-card:hover {
-            box-shadow: var(--shadow-hover);
         }
 
         .section-card h2 {
@@ -257,7 +217,6 @@
             gap: 10px;
         }
 
-        /* Forms */
         .form-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -272,16 +231,15 @@
             font-family: inherit;
             font-size: 1rem;
             transition: all 0.3s;
-            background: var(--white);
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(255,140,0,0.1);
         }
 
-        .btn-add, .btn-edit {
+        .btn-add, .btn-save {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
@@ -293,12 +251,11 @@
             transition: all 0.3s;
         }
 
-        .btn-add:hover, .btn-edit:hover {
+        .btn-add:hover, .btn-save:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255,140,0,0.3);
         }
 
-        /* Tables */
         .table-wrapper {
             overflow-x: auto;
         }
@@ -318,7 +275,6 @@
         th {
             background: linear-gradient(135deg, #f8f9fa, #f1f3f5);
             font-weight: 700;
-            color: var(--text);
         }
 
         tr:hover {
@@ -347,11 +303,6 @@
             color: var(--primary);
         }
 
-        .action-btns i:hover {
-            transform: scale(1.1);
-        }
-
-        /* Charts Grid */
         .charts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -359,85 +310,52 @@
             margin-bottom: 30px;
         }
 
-        /* Search and Filters */
         .search-bar {
             margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
         }
 
         .search-bar input {
-            flex: 1;
+            width: 100%;
+            padding: 12px;
         }
 
-        /* Notifications */
-        .notification {
+        .sync-status {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             left: 20px;
+            background: var(--success);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             z-index: 1000;
         }
 
-        /* Responsive */
         @media (max-width: 992px) {
             .sidebar {
                 width: 80px;
                 padding: 20px 10px;
             }
-            .sidebar span, .logo p, .sidebar .logout-btn span {
+            .sidebar span, .logo p {
                 display: none;
             }
             .logo h2 {
                 font-size: 1.2rem;
             }
-            .sidebar a {
-                justify-content: center;
-                padding: 12px;
-            }
-            .sidebar a i {
-                margin: 0;
-            }
             .main-content {
                 margin-right: 80px;
                 width: calc(100% - 80px);
-                padding: 20px;
             }
             .charts-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .form-group {
-                grid-template-columns: 1fr;
-            }
-            .header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-        }
-
-        /* Loading Animation */
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        .loading {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 1000px 100%;
-            animation: shimmer 1.5s infinite;
         }
     </style>
 </head>
 <body>
     <aside class="sidebar">
         <div class="logo">
-            <h2>تريند للأناقة</h2>
+            <h2 id="storeName">تريند للأناقة</h2>
             <p>إدارة متجر متكاملة</p>
         </div>
         <a href="#" data-section="dashboard" class="active">
@@ -470,9 +388,9 @@
 
     <main class="main-content">
         <header class="header">
-            <h1><i class="fas fa-store"></i> نظام إدارة متجر تريند للأناقة</h1>
+            <h1><i class="fas fa-crown"></i> لوحة تحكم المسؤول</h1>
             <div class="user-info">
-                <i class="fas fa-user-circle fa-2x"></i>
+                <i class="fas fa-user-shield fa-2x"></i>
                 <strong>مرحباً، مدير المتجر 👋</strong>
                 <div class="date-time" id="currentDateTime"></div>
             </div>
@@ -480,58 +398,36 @@
 
         <div id="dashboardSection">
             <div class="stats-grid">
-                <div class="stat-card" onclick="showStatDetails('revenue')">
+                <div class="stat-card">
                     <i class="fas fa-dollar-sign"></i>
                     <h3 id="totalRevenue">$0</h3>
                     <p>إجمالي المبيعات</p>
-                    <small style="color: var(--success);">▲ +23% عن الشهر الماضي</small>
                 </div>
-                <div class="stat-card" onclick="showStatDetails('orders')">
+                <div class="stat-card">
                     <i class="fas fa-shopping-cart"></i>
                     <h3 id="totalOrders">0</h3>
-                    <p>الطلبات هذا الشهر</p>
-                    <small style="color: var(--success);">▲ +15% عن الشهر الماضي</small>
+                    <p>إجمالي الطلبات</p>
                 </div>
-                <div class="stat-card" onclick="showStatDetails('users')">
-                    <i class="fas fa-users"></i>
-                    <h3 id="activeUsers">0</h3>
-                    <p>زائر نشط اليوم</p>
-                    <small style="color: var(--info);">متوسط 5 دقائق جلسة</small>
-                </div>
-                <div class="stat-card" onclick="showStatDetails('products')">
-                    <i class="fas fa-tags"></i>
+                <div class="stat-card">
+                    <i class="fas fa-boxes"></i>
                     <h3 id="totalProducts">0</h3>
-                    <p>إجمالي المنتجات</p>
-                    <small style="color: var(--warning);">نشطة 100%</small>
+                    <p>المنتجات</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3 id="totalCustomers">0</h3>
+                    <p>العملاء</p>
                 </div>
             </div>
 
             <div class="charts-grid">
                 <div class="section-card">
-                    <h2><i class="fas fa-chart-line"></i> تحليل المبيعات الشهرية</h2>
+                    <h2><i class="fas fa-chart-line"></i> تحليل المبيعات</h2>
                     <canvas id="salesChart"></canvas>
                 </div>
                 <div class="section-card">
-                    <h2><i class="fas fa-chart-pie"></i> توزيع المبيعات حسب الفئات</h2>
+                    <h2><i class="fas fa-chart-pie"></i> توزيع الفئات</h2>
                     <canvas id="categoryChart"></canvas>
-                </div>
-            </div>
-
-            <div class="section-card">
-                <h2><i class="fas fa-star"></i> أفضل المنتجات مبيعاً</h2>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>المنتج</th>
-                                <th>الفئة</th>
-                                <th>السعر</th>
-                                <th>المبيعات</th>
-                                <th>التقييم</th>
-                            </tr>
-                        </thead>
-                        <tbody id="topProductsList"></tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -540,8 +436,8 @@
             <div class="section-card">
                 <h2><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h2>
                 <div class="form-group">
-                    <input type="text" id="pName" placeholder="اسم المنتج" required>
-                    <input type="number" id="pPrice" placeholder="السعر ($)" required>
+                    <input type="text" id="pName" placeholder="اسم المنتج">
+                    <input type="number" id="pPrice" placeholder="السعر">
                     <select id="pCategory">
                         <option value="قمصان">قمصان</option>
                         <option value="تيشيرتات">تيشيرتات</option>
@@ -549,16 +445,16 @@
                         <option value="جاكيتات">جاكيتات</option>
                         <option value="بناطيل">بناطيل</option>
                     </select>
-                    <input type="url" id="pImage" placeholder="رابط صورة المنتج (URL)">
-                    <input type="number" id="pStock" placeholder="الكمية المتاحة" value="10">
+                    <input type="url" id="pImage" placeholder="رابط الصورة">
+                    <input type="number" id="pStock" placeholder="الكمية" value="10">
                 </div>
-                <button class="btn-add" onclick="addNewProduct()">
-                    <i class="fas fa-save"></i> إضافة المنتج للمتجر
+                <button class="btn-add" onclick="addProduct()">
+                    <i class="fas fa-save"></i> إضافة المنتج
                 </button>
             </div>
 
             <div class="section-card">
-                <h2><i class="fas fa-search"></i> إدارة المنتجات</h2>
+                <h2><i class="fas fa-list"></i> قائمة المنتجات</h2>
                 <div class="search-bar">
                     <input type="text" id="searchProduct" placeholder="🔍 بحث عن منتج..." onkeyup="filterProducts()">
                 </div>
@@ -571,10 +467,11 @@
                                 <th>الفئة</th>
                                 <th>السعر</th>
                                 <th>الكمية</th>
+                                <th>المبيعات</th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="adminProductList"></tbody>
+                        <tbody id="productsList"></tbody>
                     </table>
                 </div>
             </div>
@@ -582,7 +479,7 @@
 
         <div id="ordersSection" style="display: none;">
             <div class="section-card">
-                <h2><i class="fas fa-truck"></i> قائمة الطلبات</h2>
+                <h2><i class="fas fa-truck"></i> إدارة الطلبات</h2>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -593,6 +490,7 @@
                                 <th>السعر</th>
                                 <th>الحالة</th>
                                 <th>التاريخ</th>
+                                <th>الإجراء</th>
                             </tr>
                         </thead>
                         <tbody id="ordersList"></tbody>
@@ -603,7 +501,7 @@
 
         <div id="customersSection" style="display: none;">
             <div class="section-card">
-                <h2><i class="fas fa-user-friends"></i> قائمة العملاء</h2>
+                <h2><i class="fas fa-users"></i> قائمة العملاء</h2>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -623,96 +521,138 @@
 
         <div id="settingsSection" style="display: none;">
             <div class="section-card">
-                <h2><i class="fas fa-palette"></i> إعدادات المتجر</h2>
+                <h2><i class="fas fa-sliders-h"></i> إعدادات المتجر</h2>
                 <div class="form-group">
-                    <input type="text" id="storeName" placeholder="اسم المتجر" value="تريند للأناقة">
-                    <input type="email" id="storeEmail" placeholder="البريد الإلكتروني" value="info@trendstore.com">
+                    <input type="text" id="storeNameSetting" placeholder="اسم المتجر">
+                    <input type="email" id="storeEmail" placeholder="البريد الإلكتروني">
                     <select id="currency">
-                        <option value="$">دولار أمريكي ($)</option>
+                        <option value="$">دولار ($)</option>
                         <option value="€">يورو (€)</option>
-                        <option value="£">جنيه إسترليني (£)</option>
+                        <option value="£">جنيه (£)</option>
                     </select>
                     <input type="color" id="primaryColor" value="#ff8c00">
                 </div>
-                <button class="btn-add" onclick="saveSettings()">
+                <button class="btn-save" onclick="saveSettings()">
                     <i class="fas fa-save"></i> حفظ الإعدادات
+                </button>
+                <button class="btn-save" onclick="syncData()" style="background: var(--info); margin-right: 10px;">
+                    <i class="fas fa-sync-alt"></i> مزامنة البيانات
+                </button>
+                <button class="btn-save" onclick="resetData()" style="background: var(--danger);">
+                    <i class="fas fa-trash"></i> إعادة تعيين البيانات
                 </button>
             </div>
         </div>
     </main>
 
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-check-circle"></i> متزامن
+    </div>
+
     <script>
-        // بيانات المنتجات المتقدمة
-        let adminProducts = [
-            { id: 1, name: "قميص صيفي قطني", price: 25, category: "قمصان", image: "https://picsum.photos/id/20/50/50", stock: 15, sales: 45, rating: 4.5 },
-            { id: 2, name: "تيشيرت رياضي", price: 20, category: "تيشيرتات", image: "https://picsum.photos/id/21/50/50", stock: 30, sales: 67, rating: 4.3 },
-            { id: 3, name: "هودي شتوي", price: 45, category: "هودي", image: "https://picsum.photos/id/22/50/50", stock: 12, sales: 38, rating: 4.7 },
-            { id: 4, name: "جاكيت جلد", price: 85, category: "جاكيتات", image: "https://picsum.photos/id/23/50/50", stock: 8, sales: 23, rating: 4.8 },
-            { id: 5, name: "بنطلون جينز", price: 40, category: "بناطيل", image: "https://picsum.photos/id/24/50/50", stock: 20, sales: 52, rating: 4.4 }
-        ];
+        // قاعدة البيانات المحلية
+        let storeData = {
+            products: [],
+            orders: [],
+            customers: [],
+            settings: {
+                storeName: "تريند للأناقة",
+                storeEmail: "info@trendstore.com",
+                currency: "$",
+                primaryColor: "#ff8c00"
+            }
+        };
 
-        // بيانات الطلبات
-        let orders = [
-            { id: 1001, customer: "أحمد محمد", product: "قميص صيفي قطني", price: 25, status: "مكتمل", date: "2024-01-15" },
-            { id: 1002, customer: "سارة علي", product: "تيشيرت رياضي", price: 20, status: "قيد التوصيل", date: "2024-01-16" },
-            { id: 1003, customer: "محمد خالد", product: "هودي شتوي", price: 45, status: "مكتمل", date: "2024-01-17" }
-        ];
+        // تهيئة البيانات
+        function initializeData() {
+            const saved = localStorage.getItem('trendStoreData');
+            if(saved) {
+                storeData = JSON.parse(saved);
+            } else {
+                // بيانات افتراضية
+                storeData.products = [
+                    { id: 1, name: "قميص صيفي قطني", price: 25, category: "قمصان", image: "https://picsum.photos/id/20/50/50", stock: 15, sales: 45, rating: 4.5 },
+                    { id: 2, name: "تيشيرت رياضي", price: 20, category: "تيشيرتات", image: "https://picsum.photos/id/21/50/50", stock: 30, sales: 67, rating: 4.3 },
+                    { id: 3, name: "هودي شتوي", price: 45, category: "هودي", image: "https://picsum.photos/id/22/50/50", stock: 12, sales: 38, rating: 4.7 },
+                    { id: 4, name: "جاكيت جلد", price: 85, category: "جاكيتات", image: "https://picsum.photos/id/23/50/50", stock: 8, sales: 23, rating: 4.8 },
+                    { id: 5, name: "بنطلون جينز", price: 40, category: "بناطيل", image: "https://picsum.photos/id/24/50/50", stock: 20, sales: 52, rating: 4.4 }
+                ];
+                
+                storeData.orders = [
+                    { id: 1001, customer: "أحمد محمد", product: "قميص صيفي قطني", price: 25, status: "مكتمل", date: "2024-01-15" },
+                    { id: 1002, customer: "سارة علي", product: "تيشيرت رياضي", price: 20, status: "قيد التوصيل", date: "2024-01-16" },
+                    { id: 1003, customer: "محمد خالد", product: "هودي شتوي", price: 45, status: "مكتمل", date: "2024-01-17" }
+                ];
+                
+                storeData.customers = [
+                    { id: 1, name: "أحمد محمد", email: "ahmed@email.com", orders: 3, total: 120, joined: "2023-12-01" },
+                    { id: 2, name: "سارة علي", email: "sara@email.com", orders: 5, total: 210, joined: "2023-11-15" },
+                    { id: 3, name: "محمد خالد", email: "mohamed@email.com", orders: 2, total: 85, joined: "2024-01-05" }
+                ];
+            }
+            
+            // تطبيق الإعدادات
+            document.documentElement.style.setProperty('--primary', storeData.settings.primaryColor);
+            document.getElementById('storeName').innerHTML = storeData.settings.storeName;
+            document.getElementById('storeNameSetting').value = storeData.settings.storeName;
+            document.getElementById('storeEmail').value = storeData.settings.storeEmail;
+            document.getElementById('currency').value = storeData.settings.currency;
+            document.getElementById('primaryColor').value = storeData.settings.primaryColor;
+        }
 
-        // بيانات العملاء
-        let customers = [
-            { name: "أحمد محمد", email: "ahmed@email.com", orders: 3, total: 120, joined: "2023-12-01" },
-            { name: "سارة علي", email: "sara@email.com", orders: 5, total: 210, joined: "2023-11-15" },
-            { name: "محمد خالد", email: "mohamed@email.com", orders: 2, total: 85, joined: "2024-01-05" }
-        ];
+        // حفظ البيانات
+        function saveToLocalStorage() {
+            localStorage.setItem('trendStoreData', JSON.stringify(storeData));
+            updateSyncStatus(true);
+        }
+
+        // تحديث حالة المزامنة
+        function updateSyncStatus(synced) {
+            const statusDiv = document.getElementById('syncStatus');
+            if(synced) {
+                statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> متزامن';
+                statusDiv.style.background = 'var(--success)';
+            } else {
+                statusDiv.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> جاري المزامنة...';
+                statusDiv.style.background = 'var(--warning)';
+            }
+            setTimeout(() => {
+                if(synced) {
+                    statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> متزامن';
+                }
+            }, 2000);
+        }
 
         // تحديث الإحصائيات
         function updateStats() {
-            const totalRevenue = adminProducts.reduce((sum, p) => sum + (p.price * p.sales), 0);
-            const totalOrders = orders.length;
-            const activeUsers = Math.floor(Math.random() * 200) + 750;
-            const totalProducts = adminProducts.length;
-
-            document.getElementById('totalRevenue').innerHTML = `$${totalRevenue.toLocaleString()}`;
-            document.getElementById('totalOrders').innerHTML = totalOrders;
-            document.getElementById('activeUsers').innerHTML = activeUsers;
-            document.getElementById('totalProducts').innerHTML = totalProducts;
+            const totalRevenue = storeData.products.reduce((sum, p) => sum + (p.price * p.sales), 0);
+            document.getElementById('totalRevenue').innerHTML = `${storeData.settings.currency}${totalRevenue.toLocaleString()}`;
+            document.getElementById('totalOrders').innerHTML = storeData.orders.length;
+            document.getElementById('totalProducts').innerHTML = storeData.products.length;
+            document.getElementById('totalCustomers').innerHTML = storeData.customers.length;
         }
 
-        // عرض أفضل المنتجات
-        function renderTopProducts() {
-            const topProducts = [...adminProducts].sort((a, b) => b.sales - a.sales).slice(0, 5);
-            const list = document.getElementById('topProductsList');
-            list.innerHTML = topProducts.map(p => `
+        // عرض المنتجات
+        function renderProducts() {
+            const list = document.getElementById('productsList');
+            list.innerHTML = storeData.products.map(p => `
                 <tr>
+                    <td><img src="${p.image}" class="product-img"></td>
                     <td><strong>${p.name}</strong></td>
                     <td>${p.category}</td>
-                    <td>$${p.price}</td>
-                    <td>${p.sales}</td>
-                    <td>⭐ ${p.rating}</td>
-                </tr>
-            `).join('');
-        }
-
-        // عرض المنتجات في جدول الإدارة
-        function renderAdminProducts() {
-            const list = document.getElementById('adminProductList');
-            list.innerHTML = adminProducts.map(p => `
-                <tr>
-                    <td><img src="${p.image}" class="product-img" alt="${p.name}"></td>
-                    <td><strong>${p.name}</strong></td>
-                    <td>${p.category}</td>
-                    <td>$${p.price}</td>
+                    <td>${storeData.settings.currency}${p.price}</td>
                     <td>${p.stock}</td>
+                    <td>${p.sales}</td>
                     <td class="action-btns">
-                        <i class="fas fa-edit" onclick="editProduct(${p.id})" title="تعديل"></i>
-                        <i class="fas fa-trash-alt" onclick="deleteProduct(${p.id})" title="حذف"></i>
+                        <i class="fas fa-edit" onclick="editProduct(${p.id})"></i>
+                        <i class="fas fa-trash-alt" onclick="deleteProduct(${p.id})"></i>
                     </td>
                 </tr>
             `).join('');
         }
 
-        // إضافة منتج جديد
-        function addNewProduct() {
+        // إضافة منتج
+        function addProduct() {
             const name = document.getElementById('pName').value;
             const price = document.getElementById('pPrice').value;
             const category = document.getElementById('pCategory').value;
@@ -735,43 +675,23 @@
                 rating: 0
             };
 
-            adminProducts.push(newProduct);
-            renderAdminProducts();
+            storeData.products.push(newProduct);
+            saveToLocalStorage();
+            renderProducts();
             updateStats();
-            renderTopProducts();
+            updateCharts();
             
             Swal.fire('تم الإضافة', 'تم إضافة المنتج بنجاح', 'success');
             
-            // مسح الحقول
             document.getElementById('pName').value = '';
             document.getElementById('pPrice').value = '';
             document.getElementById('pImage').value = '';
             document.getElementById('pStock').value = '10';
         }
 
-        // حذف منتج
-        function deleteProduct(id) {
-            Swal.fire({
-                title: 'تأكيد الحذف',
-                text: 'هل أنت متأكد من حذف هذا المنتج؟',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'نعم، احذف',
-                cancelButtonText: 'إلغاء'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    adminProducts = adminProducts.filter(p => p.id !== id);
-                    renderAdminProducts();
-                    updateStats();
-                    renderTopProducts();
-                    Swal.fire('تم الحذف', 'تم حذف المنتج بنجاح', 'success');
-                }
-            });
-        }
-
         // تعديل منتج
         function editProduct(id) {
-            const product = adminProducts.find(p => p.id === id);
+            const product = storeData.products.find(p => p.id === id);
             if(product) {
                 Swal.fire({
                     title: 'تعديل المنتج',
@@ -788,48 +708,66 @@
                         <input id="swal-stock" class="swal2-input" placeholder="الكمية" value="${product.stock}">
                     `,
                     showCancelButton: true,
-                    confirmButtonText: 'حفظ التغييرات',
+                    confirmButtonText: 'حفظ',
                     cancelButtonText: 'إلغاء',
                     preConfirm: () => {
-                        const newName = document.getElementById('swal-name').value;
-                        const newPrice = document.getElementById('swal-price').value;
-                        const newCategory = document.getElementById('swal-category').value;
-                        const newStock = document.getElementById('swal-stock').value;
-                        
-                        if(!newName || !newPrice) {
-                            Swal.showValidationMessage('الرجاء إدخال جميع البيانات');
-                            return false;
-                        }
-                        
-                        return { newName, newPrice, newCategory, newStock };
+                        return {
+                            name: document.getElementById('swal-name').value,
+                            price: document.getElementById('swal-price').value,
+                            category: document.getElementById('swal-category').value,
+                            stock: document.getElementById('swal-stock').value
+                        };
                     }
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        product.name = result.value.newName;
-                        product.price = parseFloat(result.value.newPrice);
-                        product.category = result.value.newCategory;
-                        product.stock = parseInt(result.value.newStock);
-                        renderAdminProducts();
+                        product.name = result.value.name;
+                        product.price = parseFloat(result.value.price);
+                        product.category = result.value.category;
+                        product.stock = parseInt(result.value.stock);
+                        saveToLocalStorage();
+                        renderProducts();
                         updateStats();
-                        renderTopProducts();
-                        Swal.fire('تم التعديل', 'تم تحديث المنتج بنجاح', 'success');
+                        updateCharts();
+                        Swal.fire('تم التعديل', 'تم تحديث المنتج', 'success');
                     }
                 });
             }
         }
 
+        // حذف منتج
+        function deleteProduct(id) {
+            Swal.fire({
+                title: 'تأكيد الحذف',
+                text: 'هل أنت متأكد من حذف هذا المنتج؟',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    storeData.products = storeData.products.filter(p => p.id !== id);
+                    saveToLocalStorage();
+                    renderProducts();
+                    updateStats();
+                    updateCharts();
+                    Swal.fire('تم الحذف', 'تم حذف المنتج', 'success');
+                }
+            });
+        }
+
         // البحث في المنتجات
         function filterProducts() {
-            const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
-            const filtered = adminProducts.filter(p => p.name.toLowerCase().includes(searchTerm));
-            const list = document.getElementById('adminProductList');
+            const term = document.getElementById('searchProduct').value.toLowerCase();
+            const filtered = storeData.products.filter(p => p.name.toLowerCase().includes(term));
+            const list = document.getElementById('productsList');
             list.innerHTML = filtered.map(p => `
                 <tr>
                     <td><img src="${p.image}" class="product-img"></td>
                     <td><strong>${p.name}</strong></td>
                     <td>${p.category}</td>
-                    <td>$${p.price}</td>
+                    <td>${storeData.settings.currency}${p.price}</td>
                     <td>${p.stock}</td>
+                    <td>${p.sales}</td>
                     <td class="action-btns">
                         <i class="fas fa-edit" onclick="editProduct(${p.id})"></i>
                         <i class="fas fa-trash-alt" onclick="deleteProduct(${p.id})"></i>
@@ -841,67 +779,185 @@
         // عرض الطلبات
         function renderOrders() {
             const list = document.getElementById('ordersList');
-            list.innerHTML = orders.map(o => `
+            list.innerHTML = storeData.orders.map(o => `
                 <tr>
                     <td>#${o.id}</td>
                     <td>${o.customer}</td>
                     <td>${o.product}</td>
-                    <td>$${o.price}</td>
-                    <td><span style="background: ${o.status === 'مكتمل' ? '#28a745' : '#ffc107'}; color: white; padding: 4px 8px; border-radius: 8px;">${o.status}</span></td>
+                    <td>${storeData.settings.currency}${o.price}</td>
+                    <td>
+                        <select onchange="updateOrderStatus(${o.id}, this.value)" style="padding: 5px; border-radius: 8px;">
+                            <option value="قيد المراجعة" ${o.status === 'قيد المراجعة' ? 'selected' : ''}>قيد المراجعة</option>
+                            <option value="قيد التوصيل" ${o.status === 'قيد التوصيل' ? 'selected' : ''}>قيد التوصيل</option>
+                            <option value="مكتمل" ${o.status === 'مكتمل' ? 'selected' : ''}>مكتمل</option>
+                            <option value="ملغي" ${o.status === 'ملغي' ? 'selected' : ''}>ملغي</option>
+                        </select>
+                    </td>
                     <td>${o.date}</td>
+                    <td><i class="fas fa-trash-alt" onclick="deleteOrder(${o.id})" style="cursor: pointer; color: var(--danger);"></i></td>
                 </tr>
             `).join('');
+        }
+
+        // تحديث حالة الطلب
+        function updateOrderStatus(orderId, newStatus) {
+            const order = storeData.orders.find(o => o.id === orderId);
+            if(order) {
+                order.status = newStatus;
+                saveToLocalStorage();
+                renderOrders();
+                Swal.fire('تم التحديث', 'تم تحديث حالة الطلب', 'success');
+            }
+        }
+
+        // حذف طلب
+        function deleteOrder(orderId) {
+            Swal.fire({
+                title: 'تأكيد الحذف',
+                text: 'هل أنت متأكد من حذف هذا الطلب؟',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    storeData.orders = storeData.orders.filter(o => o.id !== orderId);
+                    saveToLocalStorage();
+                    renderOrders();
+                    updateStats();
+                    Swal.fire('تم الحذف', 'تم حذف الطلب', 'success');
+                }
+            });
         }
 
         // عرض العملاء
         function renderCustomers() {
             const list = document.getElementById('customersList');
-            list.innerHTML = customers.map(c => `
+            list.innerHTML = storeData.customers.map(c => `
                 <tr>
                     <td><strong>${c.name}</strong></td>
                     <td>${c.email}</td>
                     <td>${c.orders}</td>
-                    <td>$${c.total}</td>
-                    <td>${c.date}</td>
+                    <td>${storeData.settings.currency}${c.total}</td>
+                    <td>${c.joined}</td>
                 </tr>
             `).join('');
         }
 
         // حفظ الإعدادات
         function saveSettings() {
-            const storeName = document.getElementById('storeName').value;
-            const storeEmail = document.getElementById('storeEmail').value;
-            const currency = document.getElementById('currency').value;
-            const primaryColor = document.getElementById('primaryColor').value;
+            storeData.settings.storeName = document.getElementById('storeNameSetting').value;
+            storeData.settings.storeEmail = document.getElementById('storeEmail').value;
+            storeData.settings.currency = document.getElementById('currency').value;
+            storeData.settings.primaryColor = document.getElementById('primaryColor').value;
             
-            document.querySelector('.logo h2').innerHTML = storeName;
-            document.documentElement.style.setProperty('--primary', primaryColor);
+            document.documentElement.style.setProperty('--primary', storeData.settings.primaryColor);
+            document.getElementById('storeName').innerHTML = storeData.settings.storeName;
             
-            localStorage.setItem('storeSettings', JSON.stringify({ storeName, storeEmail, currency, primaryColor }));
+            saveToLocalStorage();
+            updateStats();
+            renderProducts();
+            renderOrders();
+            renderCustomers();
+            updateCharts();
+            
             Swal.fire('تم الحفظ', 'تم حفظ الإعدادات بنجاح', 'success');
         }
 
-        // تحميل الإعدادات المحفوظة
-        function loadSettings() {
-            const saved = localStorage.getItem('storeSettings');
-            if(saved) {
-                const settings = JSON.parse(saved);
-                document.getElementById('storeName').value = settings.storeName;
-                document.getElementById('storeEmail').value = settings.storeEmail;
-                document.getElementById('currency').value = settings.currency;
-                document.getElementById('primaryColor').value = settings.primaryColor;
-                document.documentElement.style.setProperty('--primary', settings.primaryColor);
-                document.querySelector('.logo h2').innerHTML = settings.storeName;
+        // مزامنة البيانات
+        function syncData() {
+            updateSyncStatus(false);
+            setTimeout(() => {
+                saveToLocalStorage();
+                Swal.fire('تمت المزامنة', 'تمت مزامنة البيانات بنجاح مع المتجر', 'success');
+            }, 1000);
+        }
+
+        // إعادة تعيين البيانات
+        function resetData() {
+            Swal.fire({
+                title: 'تحذير!',
+                text: 'هل أنت متأكد من إعادة تعيين جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم، إعادة تعيين',
+                cancelButtonText: 'إلغاء',
+                confirmButtonColor: '#dc3545'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    localStorage.removeItem('trendStoreData');
+                    initializeData();
+                    saveToLocalStorage();
+                    renderProducts();
+                    renderOrders();
+                    renderCustomers();
+                    updateStats();
+                    updateCharts();
+                    Swal.fire('تم الإعادة', 'تم إعادة تعيين البيانات إلى الإعدادات الافتراضية', 'success');
+                }
+            });
+        }
+
+        // تحديث الرسوم البيانية
+        let salesChart, categoryChart;
+        
+        function updateCharts() {
+            const categorySales = {};
+            storeData.products.forEach(p => {
+                categorySales[p.category] = (categorySales[p.category] || 0) + p.sales;
+            });
+            
+            const categories = Object.keys(categorySales);
+            const salesData = categories.map(c => categorySales[c]);
+            
+            if(categoryChart) {
+                categoryChart.data.labels = categories;
+                categoryChart.data.datasets[0].data = salesData;
+                categoryChart.update();
+            }
+            
+            const monthlySales = [1200, 1900, 1500, 2500, 4250, 3800];
+            if(salesChart) {
+                salesChart.data.datasets[0].data = monthlySales;
+                salesChart.update();
             }
         }
 
-        // عرض تفاصيل الإحصائيات
-        function showStatDetails(type) {
-            Swal.fire({
-                title: 'تفاصيل',
-                text: `عرض تفاصيل ${type} المتقدمة`,
-                icon: 'info',
-                confirmButtonText: 'حسناً'
+        function initCharts() {
+            const ctxSales = document.getElementById('salesChart').getContext('2d');
+            salesChart = new Chart(ctxSales, {
+                type: 'line',
+                data: {
+                    labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+                    datasets: [{
+                        label: 'المبيعات',
+                        data: [1200, 1900, 1500, 2500, 4250, 3800],
+                        borderColor: '#ff8c00',
+                        backgroundColor: 'rgba(255, 140, 0, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'top', rtl: true } }
+                }
+            });
+            
+            const ctxCat = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(ctxCat, {
+                type: 'doughnut',
+                data: {
+                    labels: ['قمصان', 'تيشيرتات', 'هودي', 'جاكيتات', 'بناطيل'],
+                    datasets: [{
+                        data: [45, 35, 20, 15, 25],
+                        backgroundColor: ['#ff8c00', '#e67e00', '#ffb347', '#ffa559', '#ffc47e']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom', rtl: true } }
+                }
             });
         }
 
@@ -914,17 +970,11 @@
                 document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
                 link.classList.add('active');
                 
-                document.getElementById('dashboardSection').style.display = 'none';
-                document.getElementById('productsSection').style.display = 'none';
-                document.getElementById('ordersSection').style.display = 'none';
-                document.getElementById('customersSection').style.display = 'none';
-                document.getElementById('settingsSection').style.display = 'none';
+                document.querySelectorAll('#dashboardSection, #productsSection, #ordersSection, #customersSection, #settingsSection').forEach(s => {
+                    s.style.display = 'none';
+                });
                 
-                if(section === 'dashboard') document.getElementById('dashboardSection').style.display = 'block';
-                else if(section === 'products') document.getElementById('productsSection').style.display = 'block';
-                else if(section === 'orders') document.getElementById('ordersSection').style.display = 'block';
-                else if(section === 'customers') document.getElementById('customersSection').style.display = 'block';
-                else if(section === 'settings') document.getElementById('settingsSection').style.display = 'block';
+                document.getElementById(`${section}Section`).style.display = 'block';
             });
         });
 
@@ -940,87 +990,24 @@
                 cancelButtonText: 'إلغاء'
             }).then((result) => {
                 if(result.isConfirmed) {
-                    Swal.fire('تم تسجيل الخروج', 'نتمنى رؤيتك قريباً', 'success').then(() => {
-                        // إعادة تحميل الصفحة أو التوجيه
-                        location.reload();
-                    });
+                    window.location.href = 'store.html';
                 }
             });
         });
 
-        // عرض الوقت والتاريخ
+        // عرض الوقت
         function updateDateTime() {
-            const now = new Date();
-            const dateTimeStr = now.toLocaleString('ar-EG');
-            document.getElementById('currentDateTime').innerHTML = dateTimeStr;
-        }
-
-        // إعداد الرسوم البيانية
-        let salesChart, categoryChart;
-        
-        function initCharts() {
-            const ctxSales = document.getElementById('salesChart').getContext('2d');
-            salesChart = new Chart(ctxSales, {
-                type: 'line',
-                data: {
-                    labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
-                    datasets: [{
-                        label: 'المبيعات ($)',
-                        data: [1200, 1900, 1500, 2500, 4250, 3800],
-                        borderColor: '#ff8c00',
-                        backgroundColor: 'rgba(255, 140, 0, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#ff8c00',
-                        pointBorderColor: '#fff',
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            rtl: true
-                        }
-                    }
-                }
-            });
-            
-            const ctxCat = document.getElementById('categoryChart').getContext('2d');
-            categoryChart = new Chart(ctxCat, {
-                type: 'doughnut',
-                data: {
-                    labels: ['قمصان', 'تيشيرتات', 'هودي', 'جاكيتات', 'بناطيل'],
-                    datasets: [{
-                        data: [45, 35, 20, 15, 25],
-                        backgroundColor: ['#ff8c00', '#e67e00', '#ffb347', '#ffa559', '#ffc47e'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            rtl: true
-                        }
-                    }
-                }
-            });
+            document.getElementById('currentDateTime').innerHTML = new Date().toLocaleString('ar-EG');
         }
 
         // تهيئة التطبيق
         function init() {
-            updateStats();
-            renderAdminProducts();
-            renderTopProducts();
+            initializeData();
+            saveToLocalStorage();
+            renderProducts();
             renderOrders();
             renderCustomers();
-            loadSettings();
+            updateStats();
             initCharts();
             updateDateTime();
             setInterval(updateDateTime, 1000);
