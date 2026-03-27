@@ -359,6 +359,7 @@
             localStorage.setItem('orders', JSON.stringify(orders));
             loadOrders();
             loadRecentOrders();
+            // تحديث الإحصائيات إذا لزم الأمر (مثلاً عدد الطلبات)
         }
     }
     
@@ -367,12 +368,12 @@
             let products = JSON.parse(localStorage.getItem('products')) || [];
             products = products.filter(p => p.id !== productId);
             localStorage.setItem('products', JSON.stringify(products));
-            loadProducts();
-            // Update stats
+            // تحديث المخزون في الإحصائيات
             const stats = JSON.parse(localStorage.getItem('stats')) || {};
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
             stats.currentStock = totalStock;
             localStorage.setItem('stats', JSON.stringify(stats));
+            loadProducts();
             loadStats();
         }
     }
@@ -401,6 +402,10 @@
             <div style="margin-bottom: 15px;">
                 <label>الفئة</label>
                 <input type="text" id="prod-category" style="width:100%; padding:8px; margin-top:5px; border:1px solid #ddd; border-radius:8px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label>رابط الصورة (اختياري)</label>
+                <input type="text" id="prod-image" style="width:100%; padding:8px; margin-top:5px; border:1px solid #ddd; border-radius:8px;" placeholder="https://...">
             </div>
         `;
         document.getElementById('modal').style.display = 'flex';
@@ -431,6 +436,10 @@
                     <label>الفئة</label>
                     <input type="text" id="prod-category" value="${product.category}" style="width:100%; padding:8px; margin-top:5px; border:1px solid #ddd; border-radius:8px;">
                 </div>
+                <div style="margin-bottom: 15px;">
+                    <label>رابط الصورة</label>
+                    <input type="text" id="prod-image" value="${product.image || ''}" style="width:100%; padding:8px; margin-top:5px; border:1px solid #ddd; border-radius:8px;">
+                </div>
             `;
             document.getElementById('modal').style.display = 'flex';
         }
@@ -442,6 +451,7 @@
             const price = parseInt(document.getElementById('prod-price').value);
             const stock = parseInt(document.getElementById('prod-stock').value);
             const category = document.getElementById('prod-category').value;
+            const image = document.getElementById('prod-image').value || 'https://picsum.photos/id/1/300/400';
             
             let products = JSON.parse(localStorage.getItem('products')) || [];
             
@@ -449,7 +459,7 @@
                 // Update existing
                 const index = products.findIndex(p => p.id === currentEditId);
                 if (index !== -1) {
-                    products[index] = { ...products[index], name, price, stock, category };
+                    products[index] = { ...products[index], name, price, stock, category, image };
                 }
             } else {
                 // Add new
@@ -458,13 +468,13 @@
                     id: newId,
                     name, price, stock, category,
                     sales: 0,
-                    image: name
+                    image: image
                 });
             }
             
             localStorage.setItem('products', JSON.stringify(products));
             
-            // Update stats
+            // تحديث المخزون الكلي في الإحصائيات
             const stats = JSON.parse(localStorage.getItem('stats')) || {};
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
             stats.currentStock = totalStock;
@@ -501,6 +511,19 @@
         document.getElementById('page-title').innerText = titles[section];
     }
     
+    // مزامنة فورية: الاستماع لأي تغيير في localStorage من أي تبويب آخر
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'products') {
+            loadProducts();
+            loadStats();      // لأن المخزون قد يتغير
+        } else if (event.key === 'orders') {
+            loadOrders();
+            loadRecentOrders();
+        } else if (event.key === 'stats') {
+            loadStats();
+        }
+    });
+    
     // Make functions global
     window.checkAdminLogin = checkAdminLogin;
     window.logout = logout;
@@ -513,4 +536,4 @@
     window.editOrder = editOrder;
 </script>
 </body>
-</html>
+    </html>
