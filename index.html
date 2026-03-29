@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>صيدلتي | المنصة الذكية للرعاية الصحية</title>
-    <!-- Tailwind + Fonts + Icons -->
+    <title>ترند الأناقة | متجرك للأزياء العصرية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --mint-teal: #2C9A8E;
-            --mint-light: #4FD1C5;
-            --navy: #1A365D;
-            --coral: #FF8A65;
-            --coral-dark: #e07a55;
+            --gold: #D4AF37;
+            --black: #1A1A1A;
+            --gray-light: #F5F5F5;
+            --accent: #B8860B;
         }
         * { font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
-        .trend-gradient { background: linear-gradient(90deg, var(--mint-teal), var(--mint-light)); }
-        .text-gradient { background: linear-gradient(90deg, var(--mint-teal), var(--mint-light)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .trend-gradient { background: linear-gradient(90deg, var(--black), var(--accent)); }
         .cart-sidebar {
             position: fixed; top: 0; left: 0; width: 100%; max-width: 380px; height: 100%;
             background: white; z-index: 1100; transform: translateX(-100%);
@@ -39,18 +36,16 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Navbar -->
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="navigate('home')">
-                <i class="fa-solid fa-hand-holding-medical text-2xl" style="color: var(--mint-teal);"></i>
-                <h1 class="text-2xl font-black" style="color: var(--navy);">صيدلتي</h1>
+                <i class="fa-solid fa-shirt text-2xl" style="color: var(--black);"></i>
+                <h1 class="text-2xl font-black" style="color: var(--black);">ترند الأناقة</h1>
             </div>
             <div class="flex items-center gap-4">
-                <div id="walletDisplay" class="bg-gray-100 px-4 py-1.5 rounded-full text-sm font-bold cursor-pointer" onclick="navigate('wallet')">0 ج.س</div>
                 <div class="relative cursor-pointer" onclick="toggleCart()">
-                    <i class="fa-solid fa-basket-shopping text-xl" style="color: var(--navy);"></i>
-                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    <i class="fa-solid fa-bag-shopping text-xl" style="color: var(--black);"></i>
+                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
                 </div>
                 <div class="cursor-pointer" onclick="logout()">
                     <i class="fa-solid fa-sign-out-alt text-gray-500"></i>
@@ -59,93 +54,74 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main id="app" class="max-w-7xl mx-auto px-4 py-8"></main>
 
-    <!-- Cart Sidebar -->
     <div id="cartSidebar" class="cart-sidebar flex flex-col">
         <div class="p-5 border-b flex justify-between items-center">
-            <h2 class="text-xl font-black" style="color: var(--navy);">سلة المشتريات</h2>
+            <h2 class="text-xl font-black" style="color: var(--black);">سلة التسوق</h2>
             <i class="fa-solid fa-xmark text-2xl cursor-pointer hover:text-red-500" onclick="toggleCart()"></i>
         </div>
         <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
         <div class="p-5 border-t bg-gray-50">
             <div class="flex justify-between items-center font-bold text-lg mb-4">
                 <span>الإجمالي</span>
-                <span id="cartTotalAmount" style="color: var(--mint-teal);">0 ج.س</span>
+                <span id="cartTotalAmount" class="text-black">0 ج.س</span>
             </div>
-            <button onclick="checkout()" class="w-full trend-gradient text-white py-3 rounded-xl font-bold transition hover:scale-[0.98]">تأكيد الطلب</button>
+            <button onclick="checkout()" class="w-full trend-gradient text-white py-3 rounded-xl font-bold transition hover:scale-[0.98]">إتمام الطلب عبر واتساب</button>
         </div>
     </div>
     <div id="overlay" class="overlay-dark" onclick="toggleCart()"></div>
 
-    <!-- Toast -->
     <div id="toast" class="toast"></div>
 
-    <!-- Login Modal -->
     <div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[1200]">
         <div class="bg-white rounded-2xl p-6 w-11/12 max-w-md text-center">
-            <i class="fa-solid fa-capsules text-5xl mb-3" style="color: var(--mint-teal);"></i>
-            <h2 class="text-2xl font-black mb-4" style="color: var(--navy);">مرحباً بك</h2>
+            <i class="fa-solid fa-user-tie text-5xl mb-3" style="color: var(--black);"></i>
+            <h2 class="text-2xl font-black mb-4" style="color: var(--black);">مرحباً بك</h2>
             <input type="text" id="loginUsername" placeholder="اسم المستخدم" class="w-full border border-gray-200 rounded-xl p-3 mb-3 text-right">
             <input type="password" id="loginPassword" placeholder="كلمة المرور" class="w-full border border-gray-200 rounded-xl p-3 mb-4 text-right">
-            <button onclick="handleLogin()" class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold hover:bg-teal-700 transition">دخول</button>
-            <p class="text-xs text-gray-400 mt-3">المسؤول: admin / admin123 | مستخدم عادي: أي اسم</p>
+            <button onclick="handleLogin()" class="w-full bg-black text-white py-3 rounded-xl font-bold hover:bg-gray-800 transition">دخول</button>
+     
+     
         </div>
     </div>
 
     <script>
         // ---------- CONFIG ----------
-        const TELEGRAM_BOT = '8728514878:AAFmSx79AwBGQvhVdfB9XNwHuLZut_jzU00';
-        const TELEGRAM_CHAT = '8496525619';
+        const WHATSAPP_NUMBER = '249115169965';
 
         // ---------- GLOBAL STATE ----------
-        let currentUser = null;   // { username, role, wallet }
+        let currentUser = null;   
         let products = [];
         let cart = [];
         let orders = [];
 
-        // ---------- HELPERS ----------
         function showToast(msg, isError = false) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
-            toast.style.background = isError ? '#e53e3e' : '#2C9A8E';
+            toast.style.background = isError ? '#e53e3e' : '#1A1A1A';
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        async function sendTelegram(text) {
-            try {
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT}/sendMessage?chat_id=${TELEGRAM_CHAT}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
-                await fetch(url);
-            } catch(e) { console.warn(e); }
-        }
-
         // ---------- DATA PERSISTENCE ----------
         function loadData() {
-            const storedProducts = localStorage.getItem('products');
+            const storedProducts = localStorage.getItem('products_trend');
             if (storedProducts) products = JSON.parse(storedProducts);
             else {
                 products = [
-                    { id: 1, name: 'بندول إكسترا', price: 1500, category: 'أدوية', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&h=200&fit=crop' },
-                    { id: 2, name: 'أسبيرين حماية', price: 800, category: 'أدوية', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=200&h=200&fit=crop' },
-                    { id: 3, name: 'كريم ترطيب', price: 2500, category: 'تجميل', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&h=200&fit=crop' },
-                    { id: 4, name: 'جهاز ضغط رقمي', price: 12000, category: 'معدات', image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=200&h=200&fit=crop' }
+                    { id: 1, name: 'قميص أبيض كلاسيك', price: 15000, category: 'ملابس', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400' },
+                    { id: 2, name: 'بنطال جينز أزرق', price: 22000, category: 'ملابس', image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400' },
+                    { id: 3, name: 'حذاء رياضي نايس', price: 35000, category: 'أحذية', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400' },
+                    { id: 4, name: 'ساعة يد فاخرة', price: 45000, category: 'إكسسوارات', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' }
                 ];
-                localStorage.setItem('products', JSON.stringify(products));
+                localStorage.setItem('products_trend', JSON.stringify(products));
             }
-            const storedOrders = localStorage.getItem('orders');
+            const storedOrders = localStorage.getItem('orders_trend');
             orders = storedOrders ? JSON.parse(storedOrders) : [];
         }
 
-        function saveProducts() { localStorage.setItem('products', JSON.stringify(products)); }
-        function saveOrders() { localStorage.setItem('orders', JSON.stringify(orders)); }
-
-        function loadUserWallet(username) {
-            const w = localStorage.getItem(`wallet_${username}`);
-            return w ? parseInt(w) : 0;
-        }
-        function saveUserWallet(username, amount) { localStorage.setItem(`wallet_${username}`, amount); }
+        function saveOrders() { localStorage.setItem('orders_trend', JSON.stringify(orders)); }
 
         // ---------- CART ----------
         function updateCartUI() {
@@ -155,10 +131,10 @@
             let total = 0;
             let itemCount = 0;
             if (!cart.length) {
-                container.innerHTML = `<div class="text-center py-10 text-gray-400"><i class="fa-solid fa-cart-shopping text-4xl mb-2 opacity-30"></i><p>السلة فارغة</p></div>`;
+                container.innerHTML = `<div class="text-center py-10 text-gray-400"><p>السلة فارغة</p></div>`;
                 badge.classList.add('hidden');
             } else {
-                container.innerHTML = cart.map((item, idx) => {
+                container.innerHTML = cart.map((item) => {
                     const p = products.find(prod => prod.id === item.id);
                     total += p.price * item.qty;
                     itemCount += item.qty;
@@ -167,18 +143,17 @@
                             <div class="w-16 h-16 rounded-lg bg-cover bg-center" style="background-image: url('${p.image}')"></div>
                             <div class="flex-1">
                                 <h4 class="font-bold">${p.name}</h4>
-                                <p class="text-sm" style="color: var(--mint-teal);">${p.price.toLocaleString()} ج.س</p>
+                                <p class="text-sm font-bold text-gray-600">${p.price.toLocaleString()} ج.س</p>
                                 <div class="flex justify-between items-center mt-2">
                                     <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-lg border">
-                                        <button onclick="updateCartQty(${p.id}, -1)" class="font-bold px-1">-</button>
+                                        <button onclick="updateCartQty(${p.id}, -1)">-</button>
                                         <span class="text-sm font-bold">${item.qty}</span>
-                                        <button onclick="updateCartQty(${p.id}, 1)" class="font-bold px-1">+</button>
+                                        <button onclick="updateCartQty(${p.id}, 1)">+</button>
                                     </div>
                                     <button onclick="removeFromCart(${p.id})" class="text-red-400"><i class="fa-solid fa-trash-can"></i></button>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 }).join('');
                 badge.innerText = itemCount;
                 badge.classList.remove('hidden');
@@ -190,9 +165,8 @@
             const existing = cart.find(i => i.id === productId);
             if (existing) existing.qty++;
             else cart.push({ id: productId, qty: 1 });
-            localStorage.setItem('cart', JSON.stringify(cart));
             updateCartUI();
-            showToast('تمت الإضافة إلى السلة');
+            showToast('تمت الإضافة للسلة');
             toggleCart(true);
         }
 
@@ -201,222 +175,73 @@
             if (idx !== -1) {
                 cart[idx].qty += delta;
                 if (cart[idx].qty <= 0) cart.splice(idx, 1);
-                localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartUI();
             }
         }
-        function removeFromCart(id) { cart = cart.filter(i => i.id !== id); localStorage.setItem('cart', JSON.stringify(cart)); updateCartUI(); }
+        function removeFromCart(id) { cart = cart.filter(i => i.id !== id); updateCartUI(); }
 
-        async function checkout() {
+        // ---------- WHATSAPP CHECKOUT ----------
+        function checkout() {
             if (!currentUser) return;
             if (cart.length === 0) return showToast('السلة فارغة', true);
+            
             let total = 0;
+            let itemsText = "";
             cart.forEach(item => {
                 const p = products.find(pr => pr.id === item.id);
                 total += p.price * item.qty;
+                itemsText += `- ${p.name} (عدد ${item.qty}) = ${p.price * item.qty} ج.س\n`;
             });
-            if (currentUser.wallet < total) {
-                showToast('رصيد غير كافٍ! قم بشحن المحفظة أولاً', true);
-                return;
-            }
-            // خصم الرصيد
-            currentUser.wallet -= total;
-            saveUserWallet(currentUser.username, currentUser.wallet);
-            updateHeader();
 
-            // تسجيل الطلب
-            const order = {
-                user: currentUser.username,
-                date: new Date().toLocaleString('ar-EG'),
-                items: cart.map(i => {
-                    const p = products.find(pr => pr.id === i.id);
-                    return { name: p.name, price: p.price, qty: i.qty };
-                }),
-                total: total
-            };
-            orders.push(order);
+            // إنشاء رسالة الواتساب
+            const message = `🛍️ *طلب جديد من متجر ترند الأناقة*\n\n` +
+                            `👤 *اسم العميل:* ${currentUser.username}\n` +
+                            `📦 *الطلبات:*\n${itemsText}\n` +
+                            `💰 *الإجمالي:* ${total.toLocaleString()} ج.س\n\n` +
+                            `يرجى تأكيد الطلب وتجهيزه.`;
+
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            // تسجيل محلي للطلب
+            orders.push({ user: currentUser.username, date: new Date().toLocaleString(), total, items: [...cart] });
             saveOrders();
 
-            // إشعار تلجرام
-            let msg = `🛒 *طلب جديد*\n👤 ${currentUser.username}\n💰 ${total} ج.س\n📦 المنتجات:\n`;
-            cart.forEach(i => {
-                const p = products.find(pr => pr.id === i.id);
-                msg += `- ${p.name} x${i.qty}\n`;
-            });
-            await sendTelegram(msg);
-
+            // فتح واتساب
+            window.open(waUrl, '_blank');
+            
+            // تفريغ السلة
             cart = [];
-            localStorage.setItem('cart', JSON.stringify([]));
             updateCartUI();
             toggleCart(false);
-            showToast('تم تأكيد الطلب بنجاح!');
-            if (currentPage === 'orders') renderOrders();
         }
-
-        // ---------- WALLET ----------
-        async function requestCharge(amount) {
-            if (!currentUser) return;
-            await sendTelegram(`💰 *طلب شحن محفظة*\n👤 المستخدم: ${currentUser.username}\n💵 المبلغ: ${amount} ج.س`);
-            showToast('تم إرسال طلب الشحن، سيتم التواصل معك');
-        }
-
-        // ---------- RENDERING PAGES ----------
-        let currentPage = 'home';
-        let currentFilter = 'الكل';
-        let currentSearch = '';
 
         function renderHome() {
-            let filtered = [...products];
-            if (currentFilter !== 'الكل') filtered = filtered.filter(p => p.category === currentFilter);
-            if (currentSearch) filtered = filtered.filter(p => p.name.includes(currentSearch));
-
             const app = document.getElementById('app');
             app.innerHTML = `
-                <div class="mb-8 text-center">
-                    <h2 class="text-3xl font-black" style="color: var(--navy);">مرحباً بك في صيدلتي</h2>
-                    <p class="text-gray-500">أدوية أصلية، توصيل سريع</p>
+                <div class="mb-8 text-center py-6 bg-black text-white rounded-3xl">
+                    <h2 class="text-3xl font-black">ترند الأناقة 2026</h2>
+                    <p class="text-gray-400 mt-2">عبر عن شخصيتك بأرقى الأزياء</p>
                 </div>
-                <div class="flex flex-wrap gap-3 mb-6 justify-between items-center">
-                    <div class="flex gap-2">
-                        <button onclick="setFilter('الكل')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold ${currentFilter === 'الكل' ? 'bg-teal-600 text-white' : 'bg-gray-100'}">الكل</button>
-                        <button onclick="setFilter('أدوية')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold ${currentFilter === 'أدوية' ? 'bg-teal-600 text-white' : 'bg-gray-100'}">أدوية</button>
-                        <button onclick="setFilter('تجميل')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold ${currentFilter === 'تجميل' ? 'bg-teal-600 text-white' : 'bg-gray-100'}">تجميل</button>
-                        <button onclick="setFilter('معدات')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold ${currentFilter === 'معدات' ? 'bg-teal-600 text-white' : 'bg-gray-100'}">معدات</button>
-                    </div>
-                    <div class="flex gap-2">
-                        <input type="text" id="searchInput" placeholder="ابحث عن دواء..." class="border rounded-full px-4 py-2 text-sm w-40" value="${currentSearch}">
-                        <button onclick="updateSearch()" class="bg-gray-200 px-4 rounded-full"><i class="fa-solid fa-search"></i></button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    ${filtered.map(p => `
-                        <div class="bg-white rounded-2xl shadow-sm overflow-hidden group cursor-pointer hover:shadow-md transition">
-                            <div class="h-40 bg-cover bg-center" style="background-image: url('${p.image}')"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    ${products.map(p => `
+                        <div class="bg-white rounded-2xl shadow-sm overflow-hidden group border border-gray-100">
+                            <div class="h-48 bg-cover bg-center" style="background-image: url('${p.image}')"></div>
                             <div class="p-4">
-                                <span class="text-xs text-teal-600 font-bold">${p.category}</span>
-                                <h3 class="font-bold mt-1">${p.name}</h3>
-                                <p class="text-teal-700 font-bold mt-1">${p.price.toLocaleString()} ج.س</p>
-                                <button onclick="addToCart(${p.id})" class="mt-3 w-full bg-gray-100 py-2 rounded-xl text-sm font-bold hover:bg-teal-600 hover:text-white transition">أضف للسلة</button>
+                                <h3 class="font-bold text-sm">${p.name}</h3>
+                                <p class="text-black font-black mt-1">${p.price.toLocaleString()} ج.س</p>
+                                <button onclick="addToCart(${p.id})" class="mt-3 w-full border-2 border-black py-2 rounded-xl text-xs font-bold hover:bg-black hover:text-white transition">أضف للحقيبة</button>
                             </div>
                         </div>
                     `).join('')}
-                </div>
-            `;
+                </div>`;
         }
+        
+        
 
-        function renderWallet() {
-            const app = document.getElementById('app');
-            app.innerHTML = `
-                <div class="bg-white rounded-2xl shadow-md p-8 text-center max-w-md mx-auto">
-                    <i class="fa-solid fa-wallet text-5xl mb-4" style="color: var(--mint-teal);"></i>
-                    <h2 class="text-2xl font-bold">محفظتي</h2>
-                    <p class="text-4xl font-black mt-2" style="color: var(--navy);">${currentUser.wallet.toLocaleString()} ج.س</p>
-                    <div class="mt-6">
-                        <label class="block text-right text-sm font-bold">مبلغ الشحن</label>
-                        <input type="number" id="chargeAmount" value="500" class="w-full border rounded-xl p-3 mt-1">
-                        <button onclick="requestCharge(parseInt(document.getElementById('chargeAmount').value))" class="mt-4 w-full bg-teal-600 text-white py-3 rounded-xl font-bold">طلب شحن</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderOrders() {
-            const userOrders = orders.filter(o => o.user === currentUser.username);
-            const app = document.getElementById('app');
-            if (!userOrders.length) {
-                app.innerHTML = `<div class="text-center py-16 text-gray-400"><i class="fa-solid fa-receipt text-4xl mb-2"></i><p>لا توجد طلبات سابقة</p></div>`;
-                return;
-            }
-            app.innerHTML = `<h2 class="text-2xl font-bold mb-4">طلباتي السابقة</h2>`;
-            userOrders.forEach(order => {
-                app.innerHTML += `
-                    <div class="bg-white rounded-2xl p-4 mb-4 shadow-sm">
-                        <div class="flex justify-between text-sm text-gray-500 mb-2">
-                            <span>📅 ${order.date}</span>
-                            <span>💰 ${order.total.toLocaleString()} ج.س</span>
-                        </div>
-                        ${order.items.map(i => `<div>• ${i.name} (${i.qty}) - ${i.price} ج.س</div>`).join('')}
-                    </div>
-                `;
-            });
-        }
-
-        function renderAdmin() {
-            const app = document.getElementById('app');
-            app.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4">لوحة التحكم</h2>
-                <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
-                    <h3 class="font-bold text-lg">إضافة منتج جديد</h3>
-                    <div class="grid grid-cols-2 gap-3 mt-3">
-                        <input type="text" id="newName" placeholder="الاسم" class="border rounded-xl p-2">
-                        <input type="number" id="newPrice" placeholder="السعر" class="border rounded-xl p-2">
-                        <select id="newCategory" class="border rounded-xl p-2">
-                            <option>أدوية</option><option>تجميل</option><option>معدات</option>
-                        </select>
-                        <input type="text" id="newImage" placeholder="رابط الصورة" class="border rounded-xl p-2">
-                    </div>
-                    <button onclick="addProduct()" class="mt-4 bg-teal-600 text-white px-6 py-2 rounded-xl">إضافة</button>
-                </div>
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
-                    <table class="w-full text-right">
-                        <thead class="bg-gray-100"><tr><th class="p-3">الاسم</th><th>السعر</th><th>التصنيف</th><th>حذف</th></tr></thead>
-                        <tbody id="adminProductList"></tbody>
-                    </table>
-                </div>
-            `;
-            renderAdminList();
-        }
-
-        function renderAdminList() {
-            const tbody = document.getElementById('adminProductList');
-            if (!tbody) return;
-            tbody.innerHTML = products.map(p => `
-                <tr class="border-b">
-                    <td class="p-3">${p.name}</td>
-                    <td>${p.price}</td>
-                    <td>${p.category}</td>
-                    <td><button onclick="deleteProduct(${p.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button></td>
-                </tr>
-            `).join('');
-        }
-
-        function addProduct() {
-            const name = document.getElementById('newName').value.trim();
-            const price = parseInt(document.getElementById('newPrice').value);
-            const category = document.getElementById('newCategory').value;
-            const image = document.getElementById('newImage').value.trim() || 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=200&h=200&fit=crop';
-            if (!name || isNaN(price)) return showToast('املأ البيانات', true);
-            const newId = Date.now();
-            products.push({ id: newId, name, price, category, image });
-            saveProducts();
-            renderAdminList();
-            showToast('تمت الإضافة');
-        }
-
-        function deleteProduct(id) {
-            if (confirm('حذف المنتج؟')) {
-                products = products.filter(p => p.id !== id);
-                saveProducts();
-                renderAdminList();
-                if (currentPage === 'home') renderHome();
-            }
-        }
-
-        // ---------- NAVIGATION & FILTERS ----------
         function navigate(page) {
-            if (!currentUser) return;
-            currentPage = page;
             if (page === 'home') renderHome();
-            else if (page === 'wallet') renderWallet();
-            else if (page === 'orders') renderOrders();
-            else if (page === 'admin' && currentUser.role === 'admin') renderAdmin();
-            else navigate('home');
         }
 
-        function setFilter(cat) { currentFilter = cat; renderHome(); }
-        function updateSearch() { currentSearch = document.getElementById('searchInput').value; renderHome(); }
-
-        // ---------- CART SIDEBAR ----------
         function toggleCart(open = null) {
             const sidebar = document.getElementById('cartSidebar');
             const overlay = document.getElementById('overlay');
@@ -425,81 +250,19 @@
             else { sidebar.classList.toggle('open'); overlay.classList.toggle('show'); }
         }
 
-        // ---------- AUTH ----------
         function handleLogin() {
             const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            if (username === 'admin' && password === 'admin123') {
-                currentUser = { username: 'admin', role: 'admin', wallet: 999999 };
-                saveUserWallet('admin', 999999);
-            } else if (username !== '') {
-                const wallet = loadUserWallet(username);
-                currentUser = { username, role: 'user', wallet };
-            } else {
-                showToast('أدخل اسم المستخدم', true);
-                return;
+            if (username) {
+                currentUser = { username };
+                document.getElementById('loginModal').style.display = 'none';
+                renderHome();
             }
-            document.getElementById('loginModal').style.display = 'none';
-            updateHeader();
-            navigate(currentUser.role === 'admin' ? 'admin' : 'home');
-            showToast(`مرحباً ${currentUser.username}`);
         }
 
-        function updateHeader() {
-            document.getElementById('walletDisplay').innerText = currentUser.wallet.toLocaleString() + ' ج.س';
-        }
+        function logout() { currentUser = null; document.getElementById('loginModal').style.display = 'flex'; }
 
-        function logout() {
-            currentUser = null;
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify([]));
-            document.getElementById('loginModal').style.display = 'flex';
-            updateCartUI();
-            showToast('تم تسجيل الخروج');
-        }
-
-        // ---------- INIT ----------
-        function init() {
-            loadData();
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) cart = JSON.parse(savedCart);
-            updateCartUI();
-            // auto restore session
-            const savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                try {
-                    const u = JSON.parse(savedUser);
-                    const wallet = loadUserWallet(u.username);
-                    currentUser = { ...u, wallet };
-                    document.getElementById('loginModal').style.display = 'none';
-                    updateHeader();
-                    navigate(currentUser.role === 'admin' ? 'admin' : 'home');
-                } catch(e) { document.getElementById('loginModal').style.display = 'flex'; }
-            } else {
-                document.getElementById('loginModal').style.display = 'flex';
-            }
-            window.addEventListener('beforeunload', () => {
-                if (currentUser) localStorage.setItem('currentUser', JSON.stringify({ username: currentUser.username, role: currentUser.role }));
-                else localStorage.removeItem('currentUser');
-            });
-        }
-
-        // expose global functions
-        window.addToCart = addToCart;
-        window.updateCartQty = updateCartQty;
-        window.removeFromCart = removeFromCart;
-        window.checkout = checkout;
-        window.requestCharge = requestCharge;
-        window.navigate = navigate;
-        window.toggleCart = toggleCart;
-        window.logout = logout;
-        window.handleLogin = handleLogin;
-        window.setFilter = setFilter;
-        window.updateSearch = updateSearch;
-        window.addProduct = addProduct;
-        window.deleteProduct = deleteProduct;
-
-        init();
+        loadData();
+        renderHome();
     </script>
 </body>
 </html>
