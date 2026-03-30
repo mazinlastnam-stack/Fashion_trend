@@ -216,34 +216,49 @@
             toggleCart(false);
         }
 
-        function renderHome() {
-            const app = document.getElementById('app');
-            app.innerHTML = `
-                <div class="mb-10 text-center py-12 rounded-[40px] relative overflow-hidden shadow-2xl shadow-blue-100" 
-                     style="background: linear-gradient(135deg, #349FFF, #1D77C8);">
-                    <div class="absolute -top-10 -right-10 opacity-10 rotate-12"><i class="fa-solid fa-shirt text-[200px] text-white"></i></div>
-                    <div class="relative z-10">
-                        <h2 class="text-4xl font-black text-white mb-2">ترند الأناقة 2026</h2>
-                        <p class="text-blue-50 font-medium italic">تشكيلة  الملابس و الاكسسوارات الفاخرة وصلت الآن</p>
+      function renderHome() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div class="mb-10 text-center py-12 rounded-[40px] relative overflow-hidden shadow-2xl shadow-blue-100" 
+             style="background: linear-gradient(135deg, #349FFF, #1D77C8);">
+            <div class="absolute -top-10 -right-10 opacity-10 rotate-12"><i class="fa-solid fa-shirt text-[200px] text-white"></i></div>
+            <div class="relative z-10">
+                <h2 class="text-4xl font-black text-white mb-2">ترند الأناقة 2026</h2>
+                <p class="text-blue-50 font-medium italic">تشكيلة الملابس والاكسسوارات الفاخرة</p>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            ${products.map(p => `
+                <div class="bg-white rounded-[30px] shadow-sm overflow-hidden flex flex-col h-full border border-gray-100 hover:shadow-xl transition-all duration-300">
+                    <div class="h-52 overflow-hidden bg-gray-100">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-5 flex flex-col flex-grow text-right">
+                        <span class="text-[10px] bg-blue-50 text-blue-500 font-bold px-3 py-1 rounded-full w-fit mb-2">
+                            ${p.category}
+                        </span>
+                        
+                        <h3 class="font-bold text-sm text-gray-800 mb-3 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; min-height: 2.5rem;">
+                            ${p.name}
+                        </h3>
+
+                        <div class="mt-auto">
+                            <p class="text-blue-600 font-black text-xl mb-4">
+                                ${p.price.toLocaleString()} <span class="text-xs">ج.س</span>
+                            </p>
+                            <button onclick="addToCart(${p.id})" 
+                                    class="w-full bg-gray-900 text-white py-3 rounded-2xl text-xs font-bold hover:bg-blue-600 transition-colors active:scale-95">
+                                أضف للسلة
+                            </button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    ${products.map(p => `
-                        <div class="bg-white rounded-[30px] shadow-sm overflow-hidden group border border-gray-100 flex flex-col h-full hover:shadow-xl transition-all duration-300">
-                            <div class="h-56 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('${p.image}')"></div>
-                            <div class="p-5 flex-1 flex flex-col text-right">
-                                <span class="text-[10px] bg-blue-50 text-blue-500 font-bold px-3 py-1 rounded-full w-fit mb-2">${p.category}</span>
-                                <h3 class="font-bold text-sm h-10 mb-2 leading-tight">${p.name}</h3>
-                                <div class="mt-auto">
-                                    <p class="text-black font-black text-lg">${p.price.toLocaleString()} <span class="text-xs">ج.س</span></p>
-                                    <button onclick="addToCart(${p.id})" class="mt-4 w-full bg-gray-900 text-white py-3 rounded-2xl text-xs font-bold hover:bg-blue-600 transition-colors">أضف للسلة</button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>`;
-        }
+            `).join('')}
+        </div>`;
+}
+
 
         function navigate(page) { if (page === 'home') renderHome(); }
 
